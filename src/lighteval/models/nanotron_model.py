@@ -322,7 +322,8 @@ class NanotronLightevalModel(LightevalModel):
             test_batch = torch.ones(
                 (batch_size + int(0.1 * batch_size), max_input_length), device=self.device
             ).long()  # We add 10% for marging :)
-            F.log_softmax(self._model_call(test_batch).float(), dim=-1).cpu()
+            input_mask = torch.ones_like(test_batch, dtype=torch.bool, device=self.device)
+            F.log_softmax(self._model_call(test_batch, input_mask).float(), dim=-1).cpu()
             return batch_size
 
         batch_size = forward_batch()
@@ -346,8 +347,8 @@ class NanotronLightevalModel(LightevalModel):
     def tok_decode(self, tokens: torch.LongTensor) -> List[str]:
         return self.tokenizer.batch_decode(tokens, skip_special_tokens=True)
 
-    def _model_call(self, inputs: torch.Tensor) -> torch.Tensor:
-        return self.model(inputs)
+    def _model_call(self, inputs: torch.Tensor, input_mask: torch.Tensor) -> torch.Tensor:
+        return self.model(input_ids=inputs, input_mask=input_mask)
 
     def _encode_pair(self, context, continuation):
         n_spaces = len(context) - len(context.rstrip())
@@ -452,7 +453,7 @@ class NanotronLightevalModel(LightevalModel):
             disable_tqdm=bool(dist.get_rank(self.parallel_context.world_pg) != 0),
         )
 
-    def loglikelihood(self, requests: List[LoglikelihoodRequest], override_bs=None) -> List[LoglikelihoodResponse]:
+    def loglikelihood(self, requests: List[LoglikelihoodRequest], override_bs=-1) -> List[LoglikelihoodResponse]:
         """Tokenize the context and continuation and compute the log likelihood of those
         tokenized sequences.
         """

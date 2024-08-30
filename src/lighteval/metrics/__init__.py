@@ -135,14 +135,34 @@ def apply_multichoice_metric(results: list[ModelResponse], formatted_doc: Doc, m
 
     # Todo: make better system with return_bool_score instead of taking first element
     choices_logprob = [results[i].result[0] for i in range(len(formatted_doc.choices))]
+    choices_token_lengths = [len(results[i].generated_tokens) for i in range(len(formatted_doc.choices))]
     gold_ixs = as_list(formatted_doc.gold_index)
 
     for metric in metrics:
         if metric.category == MetricCategory.MULTICHOICE:
             outputs.update(
-                metric.compute(choices_logprob=choices_logprob, gold_ixs=gold_ixs, formatted_doc=formatted_doc)
+                metric.compute(choices_logprob=choices_logprob, gold_ixs=gold_ixs, formatted_doc=formatted_doc, choices_token_lengths=choices_token_lengths)
             )
     return outputs
+
+def apply_multichoice_metric_pmi(results: list[ModelResponse], formatted_doc: Doc, metrics: list[Metric]):
+    outputs = {}
+    gold_ixs = as_list(formatted_doc.gold_index)
+    # We expect i for conditioned and len(choices) + i for unconditioned for i in [0, 1, ..., len(choices) - 1]
+    assert len(results) == len(formatted_doc.choices) * 2
+    # Sum(log_prob_conditioned_i) - Sum(log_prob_unconditioned_i)
+    normalized_log_probs = [
+        results[i].result[0] - results[i + len(formatted_doc.choices)].result[0]
+        for i in range(len(formatted_doc.choices))
+    ]
+    for metric in metrics:
+        if metric.category == MetricCategory.MULTICHOICE_PMI:
+            outputs.update(
+                metric.compute(choices_logprob=normalized_log_probs, gold_ixs=gold_ixs, formatted_doc=formatted_doc)
+            )
+
+    return outputs
+
 
 
 def apply_multichoice_metric_one_token(results: list[ModelResponse], formatted_doc: Doc, metrics: list[Metric]):
@@ -175,3 +195,4 @@ def apply_llm_as_judge_metric(results: list[ModelResponse], formatted_doc: Doc, 
             outputs.update(metric.compute(predictions=predictions, formatted_doc=formatted_doc))
 
     return outputs
+

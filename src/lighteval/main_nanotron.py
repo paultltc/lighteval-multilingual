@@ -81,7 +81,7 @@ def main(
         nanotron_checkpoint_path=checkpoint_config_path,
         dataset_loading_processes=lighteval_config.tasks.dataset_loading_processes,
         custom_tasks_directory=lighteval_config.tasks.custom_tasks,
-        override_batch_size=None,
+        override_batch_size=1,
         num_fewshot_seeds=1,
         max_samples=lighteval_config.tasks.max_samples,
         use_chat_template=False,

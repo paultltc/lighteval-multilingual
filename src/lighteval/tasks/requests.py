@@ -173,6 +173,9 @@ class Doc:
     gold_index: Union[int, list[int]]
     original_query: Optional[str] = ""  # the query before preprocessing, if stored
     specific: dict = None  # Information which is specific to the current eval
+    uncoditioned_prefix: str | None = (
+        None  # Prefix to use during pmi normalization for each chioce, if None PMI is not supported
+    )
     task_name: str = ""
 
     # For few-shot

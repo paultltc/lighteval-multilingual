@@ -210,7 +210,7 @@ def download_dataset_worker(args):
     Worker function to download a dataset from the HuggingFace Hub.
     Used for parallel dataset loading.
     """
-    dataset_path, dataset_config_name, trust_dataset = args
+    dataset_path, dataset_config_name, trust_dataset, hf_revision, filter_fn = args
     dataset = load_dataset(
         path=dataset_path,
         name=dataset_config_name,
@@ -218,5 +218,10 @@ def download_dataset_worker(args):
         cache_dir=None,
         download_mode=None,
         trust_remote_code=trust_dataset,
+        revision=hf_revision,
     )
+
+    if filter_fn:
+        dataset = dataset.filter(filter_fn)
+        
     return dataset

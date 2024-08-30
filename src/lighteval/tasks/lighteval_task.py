@@ -93,8 +93,11 @@ class LightevalTaskConfig:
     hf_repo: str
     hf_subset: str
     metric: Tuple[Union[Metric, Metrics]]
+    limit: int | None = None
+    filter: Callable[[dict], bool] | None = None
     hf_avail_splits: Optional[Tuple[str]] = None
     evaluation_splits: Optional[Tuple[str]] = None
+    hf_revision: str | None = None
     few_shots_split: Optional[str] = None
     few_shots_select: Optional[str] = None
     generation_size: Optional[int] = None
@@ -114,6 +117,30 @@ class LightevalTaskConfig:
     must_remove_duplicate_docs: bool = None
 
     version: int = 0
+
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "prompt_function": self.prompt_function,
+            "hf_repo": self.hf_repo,
+            "hf_subset": self.hf_subset,
+            "hf_revision": self.hf_revision,
+            "filter": self.filter,
+            "limit": self.limit,
+            "trust_dataset": self.trust_dataset,
+            "metric": tuple(self.metric),
+            "hf_avail_splits": self.hf_avail_splits,
+            "evaluation_splits": self.evaluation_splits,
+            "few_shots_split": self.few_shots_split,
+            "few_shots_select": self.few_shots_select,
+            "generation_size": self.generation_size,
+            "stop_sequence": self.stop_sequence,
+            "output_regex": self.output_regex,
+            "frozen": self.frozen,
+            "suite": self.suite,
+            "version": self.version,
+        }
+
 
     def __post_init__(self):
         if self.suite is None:
@@ -184,7 +211,10 @@ class LightevalTask:
         self.hf_subset = cfg.hf_subset
         self.dataset_path = self.hf_repo
         self.dataset_config_name = self.hf_subset
+        self.hf_revision = cfg.hf_revision
         self.dataset = None  # Delayed download
+        self.dataset_filter = cfg.filter
+        self.dataset_limit = cfg.limit
         self.trust_dataset = cfg.trust_dataset
         hlog(f"{self.dataset_path} {self.dataset_config_name}")
         self._fewshot_docs = None
@@ -289,7 +319,7 @@ class LightevalTask:
             list[Doc]: List of documents.
         """
         if self.dataset is None:
-            self.dataset = download_dataset_worker((self.dataset_path, self.dataset_config_name, self.trust_dataset))
+            self.dataset = download_dataset_worker((self.dataset_path, self.dataset_config_name, self.trust_dataset, self.hf_revision, self.dataset_filter))
         splits = as_list(splits)
 
         docs = []
@@ -550,14 +580,15 @@ class LightevalTask:
 
         if dataset_loading_processes <= 1:
             datasets = [
-                download_dataset_worker((task.dataset_path, task.dataset_config_name, task.trust_dataset))
+                download_dataset_worker((task.dataset_path, task.dataset_config_name, task.trust_dataset, task.hf_revision, task.dataset_filter))
                 for task in tasks
             ]
         else:
             with Pool(processes=dataset_loading_processes) as pool:
                 datasets = pool.map(
                     download_dataset_worker,
-                    [(task.dataset_path, task.dataset_config_name, task.trust_dataset) for task in tasks],
+                    [(task.dataset_path, task.dataset_config_name, task.trust_dataset, task.hf_revision, task.dataset_filter) \
+                    for task in tasks],
                 )
 
         for task, dataset in zip(tasks, datasets):

@@ -43,6 +43,7 @@ from lighteval.metrics.metrics_sample import (
     F1_score,
     JudgeLLM,
     LoglikelihoodAcc,
+    LoglikelihoodProb,
     MajAtK,
     Recall,
     StringDistance,
@@ -294,9 +295,41 @@ class Metrics(Enum):
         corpus_level_fn=np.mean,
         higher_is_better=True,
     )
+    loglikelihood_prob = SampleLevelMetric(
+        metric_name="prob",
+        sample_level_fn=LoglikelihoodProb().compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
     loglikelihood_acc_norm = SampleLevelMetric(
         metric_name="acc_norm",
         sample_level_fn=LoglikelihoodAcc(length_normalization=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    loglikelihood_acc_norm_token = SampleLevelMetric(
+        metric_name="acc_norm_token",
+        sample_level_fn=LoglikelihoodAcc(token_length_normalization=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    loglikelihood_prob_norm_token = SampleLevelMetric(
+        metric_name="prob_norm_token",
+        sample_level_fn=LoglikelihoodProb(token_length_normalization=True).compute,
+        category=MetricCategory.MULTICHOICE,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    loglikelihood_prob_norm = SampleLevelMetric(
+        metric_name="prob_norm",
+        sample_level_fn=LoglikelihoodProb(length_normalization=True).compute,
         category=MetricCategory.MULTICHOICE,
         use_case=MetricUseCase.ACCURACY,
         corpus_level_fn=np.mean,
@@ -322,6 +355,22 @@ class Metrics(Enum):
         metric_name="acc",
         sample_level_fn=LoglikelihoodAcc().compute,
         category=MetricCategory.MULTICHOICE_ONE_TOKEN,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    loglikelihood_acc_norm_pmi = SampleLevelMetric(
+        metric_name="acc_norm_pmi",
+        sample_level_fn=LoglikelihoodAcc().compute,
+        category=MetricCategory.MULTICHOICE_PMI,
+        use_case=MetricUseCase.ACCURACY,
+        corpus_level_fn=np.mean,
+        higher_is_better=True,
+    )
+    loglikelihood_prob_norm_pmi = SampleLevelMetric(
+        metric_name="prob_norm_pmi",
+        sample_level_fn=LoglikelihoodProb().compute,
+        category=MetricCategory.MULTICHOICE_PMI,
         use_case=MetricUseCase.ACCURACY,
         corpus_level_fn=np.mean,
         higher_is_better=True,

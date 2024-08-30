@@ -110,6 +110,8 @@ class Pipeline:
             raise ValueError("Must provide either a model or model config when creating a pipeline.")
 
         self.pipeline_parameters = pipeline_parameters
+        self.evaluation_tracker = evaluation_tracker
+        self.model_config = model_config
         self.launcher_type = self.pipeline_parameters.launcher_type
         if self.pipeline_parameters.max_samples:
             hlog(
@@ -118,11 +120,9 @@ class Pipeline:
 
         self.accelerator, self.parallel_context = self._init_parallelism_manager()
 
-        self.evaluation_tracker = evaluation_tracker
-        self.model_config = model_config
         self.model = self._init_model(model_config, model)
-
         self.evaluation_tracker.general_config_logger.log_model_info(self.model.model_info)
+        
         self._init_tasks_and_requests(tasks=tasks)
         self._init_random_seeds()
         # Final results
@@ -156,7 +156,7 @@ class Pipeline:
                     return NanotronLightevalModel(
                         checkpoint_path=os.path.dirname(self.pipeline_parameters.nanotron_checkpoint_path),
                         nanotron_config=self.model_config,
-                        parallel_context=self.accelerator,
+                        parallel_context=self.parallel_context,
                         debug_one_layer_model=False,
                         model_class=None,
                         env_config=self.pipeline_parameters.env_config,
