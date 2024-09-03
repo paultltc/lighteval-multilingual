@@ -103,7 +103,7 @@ class Pipeline:
         tasks: str,
         pipeline_parameters: PipelineParameters,
         evaluation_tracker: EvaluationTracker,
-        langs: str = None,      # TODO: Add argument to config
+        langs: str = None,      
         model=None,
         model_config=None,
     ):
@@ -142,9 +142,9 @@ class Pipeline:
                     raise ValueError("You are trying to launch a nanotron model, but nanotron is not installed")
                 dist.initialize_torch_distributed()
                 parallel_context = ParallelContext(
-                    tensor_parallel_size=self.model_config.parallelism.tp,
-                    pipeline_parallel_size=self.model_config.parallelism.pp,
-                    data_parallel_size=self.model_config.parallelism.dp,
+                    tensor_parallel_size=self.model_config.lighteval.parallelism.tp,
+                    pipeline_parallel_size=self.model_config.lighteval.parallelism.pp,
+                    data_parallel_size=self.model_config.lighteval.parallelism.dp,
                 )
                 test_all_gather(parallel_context=parallel_context)
 
