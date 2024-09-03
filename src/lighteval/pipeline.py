@@ -141,6 +141,7 @@ class Pipeline:
                 if not is_nanotron_available():
                     raise ValueError("You are trying to launch a nanotron model, but nanotron is not installed")
                 dist.initialize_torch_distributed()
+                # TODO: Check if we need model.parallel... or model.lighteval.paralell....
                 parallel_context = ParallelContext(
                     tensor_parallel_size=self.model_config.lighteval.parallelism.tp,
                     pipeline_parallel_size=self.model_config.lighteval.parallelism.pp,

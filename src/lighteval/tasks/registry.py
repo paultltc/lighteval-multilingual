@@ -200,6 +200,8 @@ def get_custom_tasks(custom_tasks: Union[str, ModuleType]) -> Tuple[ModuleType, 
 
 def process_config_tasks(tasks_groups_dict: Tuple[ModuleType, str], tasks: str, langs: str = None):
     proc_tasks = []
+    if tasks == 'all' and langs:
+        return process_config_tasks(tasks_groups_dict, langs)
     for task in tasks.split(','):
         task = task.strip()     # For safety
         # If we ask languages subset, apply it
