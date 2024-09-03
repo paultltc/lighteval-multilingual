@@ -96,6 +96,7 @@ def main(
         tasks=lighteval_config.tasks.tasks,
         pipeline_parameters=pipeline_parameters,
         evaluation_tracker=evaluation_tracker,
+        langs=lighteval_config.tasks.langs,
         model_config=model_config,
     )
 

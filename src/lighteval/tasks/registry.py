@@ -198,6 +198,28 @@ def get_custom_tasks(custom_tasks: Union[str, ModuleType]) -> Tuple[ModuleType, 
         tasks_string = custom_tasks_module.TASKS_GROUPS
     return custom_tasks_module, tasks_string
 
+def process_config_tasks(tasks_groups_dict: Tuple[ModuleType, str], tasks: str, langs: str = None):
+    proc_tasks = []
+    for task in tasks.split(','):
+        task = task.strip()     # For safety
+        # If we ask languages subset, apply it
+        if langs:
+            for lang in langs.split(','):
+                lang = lang.strip()     # For safety
+                pair = f"{task}-{lang}"
+                if pair in tasks_groups_dict:
+                    proc_tasks.append(tasks_groups_dict[pair])
+                else:
+                    hlog(f"WARNING: The pair {pair} is not supported, it will not be evaluated.")
+        # Else take the full task list
+        else:
+            if task in tasks_groups_dict:
+                proc_tasks.append(tasks_groups_dict[task])
+            else:
+                hlog(f"WARNING: The task {task} is not supported, it will not be evaluated.")
+    tasks = ','.join(proc_tasks)
+    return tasks
+
 
 def taskinfo_selector(
     tasks: str,

@@ -960,6 +960,12 @@ class NanotronLightevalModel(LightevalModel):
                 )
                 # batched_inputs, batch_attention, input_lengths, truncated, padded
                 with torch.no_grad():
+                    # inference_batch = {
+                    #     'input_ids': batch_model.input_ids,
+                    #     'input_mask': batch_model.input_mask,
+                    #     'lang_code': None,
+                    # }
+                    # out = self.model(**inference_batch)
                     out = self.model(input_ids=batch_model.input_ids, input_mask=batch_model.input_mask)
 
                 if dist.get_rank(self.parallel_context.pp_pg) == self.output_pp_rank:

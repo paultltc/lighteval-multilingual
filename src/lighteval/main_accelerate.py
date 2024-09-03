@@ -24,11 +24,13 @@ import os
 from datetime import timedelta
 
 from lighteval.logging.evaluation_tracker import EvaluationTracker
-from lighteval.logging.hierarchical_logger import hlog_warn, htrack
+from lighteval.logging.hierarchical_logger import hlog_warn, htrack, htrack_block
 from lighteval.models.model_config import create_model_config
 from lighteval.pipeline import EnvConfig, ParallelismManager, Pipeline, PipelineParameters
 from lighteval.utils.imports import is_accelerate_available, is_tgi_available
+from lighteval.utils.utils import build_config_from_args
 
+from nanotron.config import Config, LightEvalConfig, get_config_from_file
 
 if not is_accelerate_available() and not is_tgi_available():
     hlog_warn("Using either accelerate or text-generation to run this script is advised.")
@@ -42,9 +44,6 @@ if is_accelerate_available():
 else:
     accelerator = None
 
-from lighteval.logging.hierarchical_logger import htrack, htrack_block
-from nanotron.config import Config, LightEvalConfig, get_config_from_file
-from lighteval.utils.utils import build_config_from_args
 
 @htrack()
 def main(args):
