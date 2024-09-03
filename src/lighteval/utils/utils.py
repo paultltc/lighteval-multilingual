@@ -18,6 +18,7 @@ from typing import Any, Union
 import numpy as np
 from datasets import load_dataset
 from pytablewriter import MarkdownTableWriter
+from types import SimpleNamespace
 
 
 def flatten_dict(nested: dict, sep="/") -> dict:
@@ -225,3 +226,39 @@ def download_dataset_worker(args):
         dataset = dataset.filter(filter_fn)
         
     return dataset
+
+def build_config_from_args(args):
+    config_dict = {
+        'batch_size': args.batch_size,
+        'checkpoints_path': args.checkpoints_path,
+        'generation': args.generation,
+        'logging': SimpleNamespace(**{
+            'hub_repo_details': None,
+            'hub_repo_results': None,
+            'hub_repo_tensorboard': None,
+            'local_output_path': args.local_output_path,
+            'push_details_to_hub': args.push_details_to_hub,
+            'push_results_to_hub': args.push_results_to_hub,
+            'push_results_to_tensorboard': args.push_results_to_tensorboard,
+            'tensorboard_metric_prefix': args.tensorboard_metric_prefix
+        }),
+        'parallelism': SimpleNamespace(**{
+            'dp': args.dp,
+            'pp': args.pp,
+            'pp_engine': args.pp_engine,
+            'tp': args.tp,
+            'tp_linear_async_communication': args.tp_linear_async_communication,
+            'tp_mode': args.tp_mode
+        }),
+        'tasks': SimpleNamespace(**{
+            'custom_tasks': args.custom_tasks,
+            'dataset_loading_processes': args.dataset_loading_processes,
+            'max_samples': args.max_samples,
+            'multichoice_continuations_start_space': args.multichoice_continuations_start_space,
+            'no_multichoice_continuations_start_space': args.no_multichoice_continuations_start_space,
+            'num_fewshot_seeds': args.num_fewshot_seeds,
+            'tasks': args.tasks
+        })
+    }
+    
+    return SimpleNamespace(**config_dict)

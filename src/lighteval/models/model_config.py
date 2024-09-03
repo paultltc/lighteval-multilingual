@@ -322,6 +322,8 @@ def create_model_config(  # noqa: C901
     with open(model_config_path, "r") as f:
         config = yaml.safe_load(f)["model"]
 
+    print(config)
+
     if config["type"] == "tgi":
         return TGIModelConfig(
             inference_server_address=config["instance"]["inference_server_address"],

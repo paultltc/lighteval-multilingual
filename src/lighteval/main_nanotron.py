@@ -38,6 +38,7 @@ from nanotron.config import Config, LightEvalConfig, get_config_from_file
 
 
 SEED = 1234
+HF_TOKEN = os.getenv("HF_TOKEN")
 
 
 @htrack()
@@ -46,9 +47,9 @@ def main(
     lighteval_config_path: Optional[str] = None,
     cache_dir: Optional[str] = os.getenv("HF_HOME", "/scratch"),
 ):
-    env_config = EnvConfig(token=os.getenv("HF_TOKEN"), cache_dir=cache_dir)
+    env_config = EnvConfig(token=HF_TOKEN, cache_dir=cache_dir)
 
-    with htrack_block("Load nanotron config"):
+    with htrack_block("Load configs"):
         # Create nanotron config
         if not checkpoint_config_path.endswith(".yaml"):
             raise ValueError("The checkpoint path should point to a YAML file")
@@ -67,11 +68,14 @@ def main(
             lighteval_config = model_config.lighteval
 
     evaluation_tracker = EvaluationTracker(
-        token=os.getenv("HF_TOKEN"),
         output_dir=lighteval_config.logging.local_output_path,
         hub_results_org=lighteval_config.logging.hub_repo_tensorboard,
+        # push_results_to_hub=lighteval_config.logging.push_results_to_hub,
+        # push_details_to_hub=lighteval_config.logging.push_details_to_hub,
+        # push_results_to_tensorboard=lighteval_config.logging.push_results_to_tensorboard,
         tensorboard_metric_prefix=lighteval_config.logging.tensorboard_metric_prefix,
         nanotron_run_info=model_config.general,
+        token=HF_TOKEN,
     )
 
     pipeline_parameters = PipelineParameters(
@@ -81,8 +85,8 @@ def main(
         nanotron_checkpoint_path=checkpoint_config_path,
         dataset_loading_processes=lighteval_config.tasks.dataset_loading_processes,
         custom_tasks_directory=lighteval_config.tasks.custom_tasks,
-        override_batch_size=1,
-        num_fewshot_seeds=1,
+        override_batch_size=lighteval_config.batch_size,
+        num_fewshot_seeds=lighteval_config.tasks.num_fewshot_seeds,
         max_samples=lighteval_config.tasks.max_samples,
         use_chat_template=False,
         system_prompt=None,
