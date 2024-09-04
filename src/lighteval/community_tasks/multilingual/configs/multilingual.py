@@ -22,9 +22,8 @@ import importlib
 LANGS = ['ar', 'bg', 'bn', 'ca', 'de', 'el', 'en', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'pt', 'ru', 'sw', 'ta', 'te', 'th', 'tr', 'ur', 'vi', 'zh']
 
 _ALL_TASKS = []
-TASKS_GROUPS = {}
+TASKS_GROUPS = {lang: [] for lang in LANGS}
 
-langs_tasks = {lang: [] for lang in LANGS}
 for task_group in TASKS_ENUM:
     for task in task_group.value:
         tls = []
@@ -36,23 +35,18 @@ for task_group in TASKS_ENUM:
             # If the task has multiple subsets, instantiate them all
             if hasattr(task, "SUBSETS"):
                 tl = [task(lang=lang, subset=s) for s in get_args(task.SUBSETS)]
-                langs_tasks[lang].extend(tl)
-                tls.extend(tl)
             # Otherwise, instantiate the task
             else:
-                tl = task(lang=lang)
-                langs_tasks[lang].append(tl)
-                tls.append(tl)
+                tl = [task(lang=lang)]
+            # Create the pair-level group
+            TASKS_GROUPS[f"{task.NAME}-{lang}"] = tl
+            TASKS_GROUPS[lang].extend(tl)
+            tls.extend(tl)
+        TASKS_GROUPS[task.NAME] = tls
         _ALL_TASKS.extend(tls)
-        TASKS_GROUPS[task.NAME] = tasks_to_string(tls)
 
-for lang, lang_tasks in langs_tasks.items():
-    # Add lang-level group
-    TASKS_GROUPS[lang] = tasks_to_string(lang_tasks)
-
-    # Add pair-level group
-    for task in lang_tasks:
-        TASKS_GROUPS[f"{task.NAME}-{lang}"] = tasks_to_string([task])
+for group, group_tasks in TASKS_GROUPS.items():
+    TASKS_GROUPS[group] = tasks_to_string(group_tasks)
 
 # Add the 'all' group
 TASKS_GROUPS['all'] = tasks_to_string(_ALL_TASKS)

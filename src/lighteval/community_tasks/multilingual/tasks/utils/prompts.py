@@ -199,18 +199,18 @@ def get_m_mmlu_prompt(lang: LANGS, is_number_choice: bool = False, zero_based=Tr
     prompter = _get_multi_qa_prompt(lang)
 
     def adapter(line, task_name):
-        gold_index = (
-            LETTER_INDICES.index(line["answer"])
-            if not is_number_choice
-            else int(line["answer"])
-        )
-        if not zero_based:
-            gold_index -= 1
+        # gold_index = (
+        #     LETTER_INDICES.index(line["answer"])
+        #     if not is_number_choice
+        #     else int(line["answer"])
+        # )
+        # if not zero_based:
+        #     gold_index -= 1
         return prompter(
             task_name, 
             line["instruction"], 
-            [line[f"choice_{l}"] for l in LETTER_INDICES[:4]], 
-            gold_index
+            [line[f"option_{l.lower()}"] for l in LETTER_INDICES[:4]], 
+            LETTER_INDICES.index(line["answer"])-1
         )
 
     return adapter

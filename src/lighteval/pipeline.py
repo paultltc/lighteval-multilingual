@@ -116,7 +116,7 @@ class Pipeline:
         self.launcher_type = self.pipeline_parameters.launcher_type
         if self.pipeline_parameters.max_samples:
             hlog(
-                "WARNING: --max_samples WAS SET. THESE NUMBERS ARE ONLY PARTIAL AND SHOULD NOT BE USED FOR COMPARISON UNLESS YOU KNOW WHAT YOU ARE DOING."
+                f"WARNING: --max_samples WAS SET TO {self.pipeline_parameters.max_samples}. THESE NUMBERS ARE ONLY PARTIAL AND SHOULD NOT BE USED FOR COMPARISON UNLESS YOU KNOW WHAT YOU ARE DOING."
             )
 
         self.accelerator, self.parallel_context = self._init_parallelism_manager()
