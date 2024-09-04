@@ -6,7 +6,7 @@ from lighteval.metrics.metrics import Metrics
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
 
 class PersianMMLU(LightevalTaskConfig):
-    NAME = "m_truthfulqa"
+    NAME = "m_mmlu-fa"
     LANGS = Literal['fa']
 
     def __init__(self, lang: LANGS):
@@ -16,6 +16,7 @@ class PersianMMLU(LightevalTaskConfig):
             suite=("custom",),
             hf_repo="raia-center/khayyam-challenge",
             hf_subset="default",
+            filter=lambda line: not any([line[c] is None for c in [f'Choice {i}' for i in range(1,5)]]),
             trust_dataset=True,
             evaluation_splits=("train",),
             metric=(

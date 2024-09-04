@@ -19,7 +19,7 @@ from typing import Literal, get_args
 
 import importlib
 
-LANGS = ['ar', 'bg', 'bn', 'ca', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'pt', 'ru', 'sw', 'ta', 'te', 'th', 'tr', 'ur', 'vi', 'zh']
+LANGS = ['ar', 'bg', 'bn', 'ca', 'de', 'el', 'en', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'pt', 'ru', 'sw', 'ta', 'te', 'th', 'tr', 'ur', 'vi', 'zh']
 
 _ALL_TASKS = []
 TASKS_GROUPS = {}

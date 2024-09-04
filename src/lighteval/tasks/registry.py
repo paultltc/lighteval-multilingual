@@ -143,7 +143,7 @@ class Registry:
 
         if len(TASKS_TABLE) > 0:
             custom_tasks_registry = create_config_tasks(meta_table=TASKS_TABLE, cache_dir=self.cache_dir)
-            hlog(custom_tasks_registry)
+            #hlog(custom_tasks_registry)
 
         # Select relevant tasks given the subset asked for by the user
         tasks_dict = {}

@@ -220,6 +220,7 @@ def download_dataset_worker(args):
         download_mode=None,
         trust_remote_code=trust_dataset,
         revision=hf_revision,
+        token=os.getenv('HF_TOKEN')
     )
 
     if filter_fn:

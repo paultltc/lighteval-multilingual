@@ -527,7 +527,6 @@ def get_khayyam_challenge_prompt(lang: LANGS):
             line["Choice 4"],
         ],
         int(line["Key"])-1,
-        context=line["support"],
     )
 
 

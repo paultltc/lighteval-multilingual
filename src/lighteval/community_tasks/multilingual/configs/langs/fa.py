@@ -14,7 +14,9 @@ from lighteval.community_tasks.multilingual.tasks.qa.mintaka import MintakaTask
 from lighteval.community_tasks.multilingual.tasks.qa.mlqa import MlqaTask
 from lighteval.community_tasks.multilingual.tasks.qa.tydiqa import TydiqaTask
 
-_TASKS_LIST = [MlqaTask, XquadTask, get_mlmm_tasks, LambadaTask, XStoryClozeTask, XNLITask, PawnsXTask, BelebeleTask, MintakaTask, XCSQATask, XCODAHTask]
+from lighteval.community_tasks.multilingual.tasks.mqa.persian_mmlu import PersianMMLU
+
+_TASKS_LIST = [PersianMMLU]
 
 _TASKS_DICT = build_tasks_per_group(_TASKS_LIST, 'fa')
 
