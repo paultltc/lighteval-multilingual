@@ -210,7 +210,7 @@ def get_m_mmlu_prompt(lang: LANGS, is_number_choice: bool = False, zero_based=Tr
             task_name, 
             line["instruction"], 
             [line[f"option_{l.lower()}"] for l in LETTER_INDICES[:4]], 
-            LETTER_INDICES.index(line["answer"])-1
+            LETTER_INDICES.index(line["answer"])
         )
 
     return adapter
