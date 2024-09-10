@@ -69,7 +69,7 @@ class ExamsTask(LightevalTaskConfig):
         )
     
     @staticmethod
-    def get_lang_tasks(self, lang):
+    def get_lang_tasks(lang):
         return [ExamsTask(lang, subset) for subset in get_args(ExamsTask.SUBSETS[lang])]
     
 def get_exams_tasks(lang):

@@ -4,6 +4,7 @@ from lighteval.community_tasks.multilingual.tasks.mqa_with_context.belebele impo
 from lighteval.community_tasks.multilingual.tasks.mqa_with_context.m3exam import M3ExamTask
 from lighteval.community_tasks.multilingual.tasks.mqa_with_context.xquad import XquadTask
 from lighteval.community_tasks.multilingual.tasks.mqa_with_context.xstory_cloze import XStoryClozeTask
+from lighteval.community_tasks.multilingual.tasks.mqa.exams import ExamsTask
 from lighteval.community_tasks.multilingual.tasks.mqa.xcopa import XCopaTask
 from lighteval.community_tasks.multilingual.tasks.mqa.m_mmlu import M_MMLUTask
 from lighteval.community_tasks.multilingual.tasks.mqa.persian_mmlu import PersianMMLU
@@ -38,6 +39,7 @@ class TASKS_ENUM(Enum):
         XStoryClozeTask,
         XWinogradeTask,
         M3ExamTask,
+        ExamsTask,
         M_HellaSwagTask,
         M_MMLUTask,
         PersianMMLU,
