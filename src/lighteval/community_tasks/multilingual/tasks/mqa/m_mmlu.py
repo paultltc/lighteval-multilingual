@@ -94,6 +94,9 @@ class M_MMLUTask(LightevalTaskConfig):
             ),
         )
 
+    def get_lang_tasks(self, lang):
+        return [M_MMLUTask(lang, subset) for subset in get_args(self.SUBSETS)]
+
 # ----------------------------------- OKAPI ---------------------------------- #
 # class M_MMLUTask(LightevalTaskConfig):
 #     NAME = "m_mmlu"

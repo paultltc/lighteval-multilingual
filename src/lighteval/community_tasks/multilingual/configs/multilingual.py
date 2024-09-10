@@ -34,7 +34,7 @@ for task_group in TASKS_ENUM:
                 continue
             # If the task has multiple subsets, instantiate them all
             if hasattr(task, "SUBSETS"):
-                tl = [task(lang=lang, subset=s) for s in get_args(task.SUBSETS)]
+                tl = task.get_lang_tasks(lang)
             # Otherwise, instantiate the task
             else:
                 tl = [task(lang=lang)]
