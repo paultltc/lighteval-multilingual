@@ -205,7 +205,7 @@ def process_config_tasks(tasks_groups_dict: Tuple[ModuleType, str], tasks: str, 
     for task in tasks.split(','):
         task = task.strip()     # For safety
         # If we ask languages subset, apply it
-        if langs:
+        if not langs is None and langs != 'all':
             for lang in langs.split(','):
                 lang = lang.strip()     # For safety
                 pair = f"{task}-{lang}"
