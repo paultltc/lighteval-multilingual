@@ -68,8 +68,9 @@ class ExamsTask(LightevalTaskConfig):
                 Metrics.loglikelihood_acc_norm_token, Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi),
         )
     
+    @staticmethod
     def get_lang_tasks(self, lang):
-        return [ExamsTask(lang, subset) for subset in get_args(self.SUBSETS[lang])]
+        return [ExamsTask(lang, subset) for subset in get_args(ExamsTask.SUBSETS[lang])]
     
 def get_exams_tasks(lang):
         return [ExamsTask(lang, subset) for subset in get_args(ExamsTask.LANG_SUBSETS[lang])]
