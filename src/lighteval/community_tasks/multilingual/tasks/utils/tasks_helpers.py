@@ -8,6 +8,8 @@ from lighteval.community_tasks.multilingual.tasks.mqa.exams import ExamsTask
 from lighteval.community_tasks.multilingual.tasks.mqa.xcopa import XCopaTask
 from lighteval.community_tasks.multilingual.tasks.mqa.m_mmlu import M_MMLUTask
 from lighteval.community_tasks.multilingual.tasks.mqa.persian_mmlu import PersianMMLU
+from lighteval.community_tasks.multilingual.tasks.mqa.arabic_mmlu import ArabicMMLUTask
+from lighteval.community_tasks.multilingual.tasks.mqa.cmmlu import CMMLUTask
 from lighteval.community_tasks.multilingual.tasks.nli.lambada import LambadaTask
 from lighteval.community_tasks.multilingual.tasks.nli.pawns import PawnsXTask
 from lighteval.community_tasks.multilingual.tasks.nli.xcsr import XCODAHTask, XCSQATask
@@ -43,6 +45,8 @@ class TASKS_ENUM(Enum):
         M_HellaSwagTask,
         M_MMLUTask,
         PersianMMLU,
+        ArabicMMLUTask,
+        CMMLUTask,
         M_TruthfulQATask,
         XCopaTask
     }

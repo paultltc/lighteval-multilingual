@@ -1,5 +1,5 @@
 from ast import List
-from typing import Literal
+from typing import Literal, get_args
 
 from ..utils.prompts import get_cmllu_prompt
 from lighteval.metrics.metrics import Metrics
@@ -77,6 +77,10 @@ CMMLU_TASK_TYPE = Literal[
 ]
 
 class CMMLUTask(LightevalTaskConfig):
+    NAME = "c_mmlu"
+    LANGS = Literal['zh']
+    SUBSETS = CMMLU_TASK_TYPE
+
     def __init__(self, task: CMMLU_TASK_TYPE):
         self.task = task
         super().__init__(
@@ -94,3 +98,7 @@ class CMMLUTask(LightevalTaskConfig):
                 Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
             ),
         )
+
+    @staticmethod
+    def get_lang_tasks(lang):
+        return [CMMLUTask(subset) for subset in get_args(CMMLUTask.SUBSETS)]
