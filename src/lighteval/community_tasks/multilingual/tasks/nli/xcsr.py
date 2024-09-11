@@ -20,6 +20,7 @@ class XCODAHTask(LightevalTaskConfig):
             suite=("custom",),
             hf_repo="INK-USC/xcsr",
             hf_subset=f"X-CODAH-{'jap' if lang == 'ja' else lang}",
+            filter=lambda x: all(len(x["question"]["choices"]["text"][i].strip()) > 0 for i in range(len(x["question"]["choices"]["text"]))),
             evaluation_splits=("validation",),
             metric=[Metrics.loglikelihood_acc, Metrics.loglikelihood_acc_norm_nospace, Metrics.loglikelihood_acc_norm_token, Metrics.loglikelihood_acc_norm_pmi],
         )

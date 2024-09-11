@@ -247,7 +247,7 @@ class LoglikelihoodAcc:
             
         if self.token_length_normalization:
             assert len(choices_token_lengths) == len(formatted_doc.choices), f"Choices token lengths {choices_token_lengths} must have the same length as the number of choices {len(formatted_doc.choices)}"
-            choices_logprob = [choices_logprob[ix] / choices_token_lengths[ix] for ix in range(len(choices_logprob))]
+            choices_logprob = [choices_logprob[ix] / choices_token_lengths[ix] if choices_token_lengths[ix] else 0  for ix in range(len(choices_logprob))]
 
         n_correct = len(gold_ixs)
         best_choices = np.argpartition(choices_logprob, -n_correct)[-n_correct:]
@@ -257,6 +257,7 @@ class LoglikelihoodAcc:
 
 def safe_divide(numerator: np.ndarray, denominator: float, default_value: float = 0.0) -> np.ndarray:
     return np.where(denominator != 0, numerator / denominator, default_value)
+
 class LoglikelihoodProb:
     def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False) -> None:
         """Log likelihood probability class. It tests probability of choosing the best choice.

@@ -60,6 +60,7 @@ class BelebeleTask(LightevalTaskConfig):
             suite=("custom",),
             hf_repo="facebook/belebele",
             hf_subset=subsets[0],
+            filter=lambda x: all(len(x[f"mc_answer{i}"]) > 0 for i in range(1, 5)),
             evaluation_splits=("test",),
             metric=(
                 Metrics.loglikelihood_acc_norm_token,
