@@ -9,7 +9,7 @@ XCSR_LANGS = Literal["ar", "de", "en", "es", "fr", "hi", "it", "ja", "nl", "pl",
 
 
 class XCODAHTask(LightevalTaskConfig):
-    NAME = "x_codah"
+    NAME = "xcodah"
     LANGS = XCSR_LANGS
 
     def __init__(self, lang: LANGS):
@@ -26,7 +26,7 @@ class XCODAHTask(LightevalTaskConfig):
 
 
 class XCSQATask(LightevalTaskConfig):
-    NAME = "x_csqa"
+    NAME = "xcsqa"
     LANGS = XCSR_LANGS
     
     def __init__(self, lang: LANGS):

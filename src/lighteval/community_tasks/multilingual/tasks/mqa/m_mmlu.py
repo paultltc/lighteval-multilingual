@@ -73,7 +73,7 @@ class M_MMLUTask(LightevalTaskConfig):
     def __init__(self, lang: LANGS, subset: SUBSETS):
         self.subset = subset
         super().__init__(
-            name=f"mmlu-{lang}:{subset}",
+            name=f"m_mmlu-{lang}:{subset}",
             prompt_function=get_m_mmlu_prompt(lang),
             suite=("custom",),
             hf_repo="alexandrainst/m_mmlu",

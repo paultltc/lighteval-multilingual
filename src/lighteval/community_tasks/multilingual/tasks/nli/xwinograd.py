@@ -9,7 +9,7 @@ from lighteval.tasks.lighteval_task import LightevalTaskConfig
 LANGS = Literal["zh", "ru", "fr", "en", "ja", "pt"]
 
 class XWinogradeTask(LightevalTaskConfig):
-    NAME = "x_winograd"
+    NAME = "xwinograd"
     LANGS = Literal["zh", "ru", "fr", "en", "ja", "pt"]
 
     def __init__(self, lang: LANGS):

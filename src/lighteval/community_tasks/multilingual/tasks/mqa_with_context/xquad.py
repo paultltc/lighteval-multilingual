@@ -10,7 +10,7 @@ EVAL_TYPE = Literal["exact", "f1"]
 LANGS = Literal["ar", "de", "el", "en", "es", "hi", "ru", "ro", "th", "tr", "vi", "zh"]
 
 class XquadTask(LightevalTaskConfig):
-    NAME = "x_quad"
+    NAME = "xquad"
     LANGS = Literal["ar", "de", "el", "en", "es", "hi", "ru", "ro", "th", "tr", "vi", "zh"]
 
     def __init__(self, lang: LANGS):

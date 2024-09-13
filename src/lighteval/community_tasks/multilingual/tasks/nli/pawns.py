@@ -11,7 +11,7 @@ LANGS = Literal["de", "en", "es", "fr", "ja", "ko", "zh"]
 
 
 class PawnsXTask(LightevalTaskConfig):
-    NAME = "x_paws"
+    NAME = "xpaws"
     LANGS = Literal["de", "en", "es", "fr", "ja", "ko", "zh"]
 
     def __init__(self, lang: LANGS, version: Literal[1, 2] = 1):

@@ -10,7 +10,7 @@ LANGS = Literal["ar", "et", "ht", "it", "id", "qu", "sw", "zh", "ta", "th", "tr"
 
 
 class XCopaTask(LightevalTaskConfig):
-    NAME = "x_copa"
+    NAME = "xcopa"
     LANGS = Literal["ar", "en", "et", "ht", "it", "id", "qu", "sw", "zh", "ta", "th", "tr", "vi"]
 
     def __init__(self, lang: LANGS):

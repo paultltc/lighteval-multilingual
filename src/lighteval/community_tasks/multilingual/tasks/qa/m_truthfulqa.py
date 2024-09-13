@@ -12,7 +12,7 @@ class M_TruthfulQATask(LightevalTaskConfig):
 
     def __init__(self, lang: LANGS, type: TYPES = "mc1"):
         super().__init__(
-            name=f"truthfulqa-{lang}",
+            name=f"m_truthfulqa-{lang}",
             prompt_function=get_m_truthfulqa_prompt(lang, type),
             suite=("custom",),
             hf_repo="alexandrainst/m_hellaswag",

@@ -11,7 +11,7 @@ class PersianMMLU(LightevalTaskConfig):
 
     def __init__(self, lang: LANGS):
         super().__init__(
-            name=f"mmlu-{lang}",
+            name=f"m_mmlu-{lang}",
             prompt_function=get_khayyam_challenge_prompt(lang),
             suite=("custom",),
             hf_repo="raia-center/khayyam-challenge",

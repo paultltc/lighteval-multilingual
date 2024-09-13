@@ -9,7 +9,7 @@ from lighteval.tasks.default_prompts import storycloze
 LANGS = Literal["zh", "ru", "en", "ar", "te", "sw", "hi", "es", "eu", "id", "my"]
 
 class XStoryClozeTask(LightevalTaskConfig):
-    NAME = "x_story_cloze"
+    NAME = "xstory_cloze"
     LANGS = Literal["zh", "ru", "en", "ar", "te", "sw", "hi", "es", "eu", "id", "my"]
 
     def __init__(self, lang: LANGS):

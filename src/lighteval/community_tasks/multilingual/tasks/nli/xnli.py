@@ -11,7 +11,7 @@ LANGS = Literal["ar", "bg", "de", "el", "en", "es", "fr", "hi", "ru", "sw", "th"
 
 
 class XNLITask(LightevalTaskConfig):
-    NAME = "x_nli"
+    NAME = "xnli"
     LANGS = Literal["ar", "bg", "de", "el", "en", "es", "fr", "hi", "ru", "sw", "th", "tr", "ur", "vi", "zh"]
 
     def __init__(self, lang: LANGS, version: Literal[1,2] = 1):
