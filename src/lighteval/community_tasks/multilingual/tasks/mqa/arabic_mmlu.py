@@ -1,5 +1,4 @@
-from ast import List
-from typing import Literal
+from typing import Literal, get_args
 
 from ..utils.prompts import get_arabic_mmlu_prompt, get_cmllu_prompt
 from lighteval.metrics.metrics import Metrics
@@ -50,7 +49,11 @@ AR_MMLU_TASK_TYPE = Literal[
 ]
 
 class ArabicMMLUTask(LightevalTaskConfig):
-    def __init__(self, task: AR_MMLU_TASK_TYPE, max_query_length: int, limit: int):
+    NAME = "ar_mmlu"
+    LANGS = Literal['ar']
+    SUBSETS = AR_MMLU_TASK_TYPE
+
+    def __init__(self, task: AR_MMLU_TASK_TYPE, max_query_length: int=2048, limit: int=250):
         super().__init__(
             name=f"arabic_mmlu_native:{task.lower().replace(' ', '_').replace('(', '').replace(')', '')}",
             prompt_function=get_arabic_mmlu_prompt("ar"),
@@ -67,3 +70,7 @@ class ArabicMMLUTask(LightevalTaskConfig):
                 Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
             ),
         )
+
+    @staticmethod
+    def get_lang_tasks(lang):
+        return [ArabicMMLUTask(subset) for subset in get_args(ArabicMMLUTask.SUBSETS)]

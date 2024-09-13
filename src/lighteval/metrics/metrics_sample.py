@@ -247,7 +247,7 @@ class LoglikelihoodAcc:
             
         if self.token_length_normalization:
             assert len(choices_token_lengths) == len(formatted_doc.choices), f"Choices token lengths {choices_token_lengths} must have the same length as the number of choices {len(formatted_doc.choices)}"
-            choices_logprob = [choices_logprob[ix] / choices_token_lengths[ix] for ix in range(len(choices_logprob))]
+            choices_logprob = safe_token_normalization(choices_logprob, choices_token_lengths)
 
         n_correct = len(gold_ixs)
         best_choices = np.argpartition(choices_logprob, -n_correct)[-n_correct:]
@@ -256,7 +256,14 @@ class LoglikelihoodAcc:
 
 
 def safe_divide(numerator: np.ndarray, denominator: float, default_value: float = 0.0) -> np.ndarray:
-    return np.where(denominator != 0, numerator / denominator, default_value)
+    if denominator == 0:
+        return np.full_like(numerator, default_value)
+    return numerator / denominator
+
+def safe_token_normalization(choices_logprob, choices_token_lengths, default_value: float = 0.0):
+    return [choices_logprob[ix] / choices_token_lengths[ix] if choices_token_lengths[ix] else default_value for ix in range(len(choices_logprob))]
+    return np.where(choices_token_lengths != 0, choices_logprob / choices_token_lengths, default_value)
+
 class LoglikelihoodProb:
     def __init__(self, length_normalization: bool = False, token_length_normalization: bool = False, ignore_first_space: bool = False) -> None:
         """Log likelihood probability class. It tests probability of choosing the best choice.
@@ -302,7 +309,7 @@ class LoglikelihoodProb:
 
         if self.token_length_normalization:
             assert len(choices_token_lengths) == len(formatted_doc.choices), f"Choices token lengths {choices_token_lengths} must have the same length as the number of choices {len(formatted_doc.choices)}"
-            choices_logprob = [choices_logprob[ix] / choices_token_lengths[ix] for ix in range(len(choices_logprob))]
+            choices_logprob = safe_token_normalization(choices_logprob, choices_token_lengths)
 
         probs = np.exp(choices_logprob)
         probs = safe_divide(probs[gold_ixs], np.sum(probs))
