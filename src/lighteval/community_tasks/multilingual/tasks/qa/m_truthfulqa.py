@@ -15,7 +15,7 @@ class M_TruthfulQATask(LightevalTaskConfig):
             name=f"m_truthfulqa-{lang}",
             prompt_function=get_m_truthfulqa_prompt(lang, type),
             suite=("custom",),
-            hf_repo="alexandrainst/m_hellaswag",
+            hf_repo="alexandrainst/m_truthfulqa",
             hf_subset=lang,
             trust_dataset=True,
             evaluation_splits=("val",),
