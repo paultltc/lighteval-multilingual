@@ -26,7 +26,7 @@ class MlqaTask(LightevalTaskConfig):
             filter=lambda x: len(x["question"] + x["context"]) < max_query_length if max_query_length else True,
             trust_dataset=True,
             evaluation_splits=("test",),
-            few_shots_split="train",
+            #few_shots_split="train",
             generation_size=100,
             stop_sequence=("\n",),
             metric=(get_qa_metric(lang, "exact"), get_qa_metric(lang, "f1")),
