@@ -212,6 +212,7 @@ def download_dataset_worker(args):
     Used for parallel dataset loading.
     """
     dataset_path, dataset_config_name, trust_dataset, hf_revision, filter_fn = args
+    # TODO: Add cache dir
     dataset = load_dataset(
         path=dataset_path,
         name=dataset_config_name,

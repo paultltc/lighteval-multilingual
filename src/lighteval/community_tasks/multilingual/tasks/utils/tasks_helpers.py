@@ -51,7 +51,7 @@ class TASKS_ENUM(Enum):
         XCopaTask
     }
 
-def tasks_to_string(tasks: list, n_fewshot: int = 0) -> str:
+def tasks_to_string(tasks: list, n_fewshot: int = 4) -> str:
     return ",".join([f"custom|{t if isinstance(t, str) else t.name}|{n_fewshot if t.few_shots_split else 0}|1" for t in tasks])
 
 def task_to_groups(task) -> TASKS_ENUM:

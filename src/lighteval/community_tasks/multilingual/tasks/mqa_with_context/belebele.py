@@ -63,8 +63,13 @@ class BelebeleTask(LightevalTaskConfig):
             filter=lambda x: all(len(x[f"mc_answer{i}"]) > 0 for i in range(1, 5)),
             evaluation_splits=("test",),
             metric=(
+                Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_token,
                 Metrics.loglikelihood_acc_norm_nospace,
-                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_acc_norm_pmi, 
+                Metrics.loglikelihood_prob, 
+                Metrics.loglikelihood_prob_norm, 
+                Metrics.loglikelihood_prob_norm_token, 
+                Metrics.loglikelihood_prob_norm_pmi,
             ),
         )
