@@ -65,9 +65,13 @@ class ArabicMMLUTask(LightevalTaskConfig):
             evaluation_splits=("test",),
             metric=(
                 Metrics.loglikelihood_acc,
-                Metrics.loglikelihood_acc_norm_nospace,
                 Metrics.loglikelihood_acc_norm_token,
-                Metrics.loglikelihood_acc_norm_pmi, Metrics.loglikelihood_prob, Metrics.loglikelihood_prob_norm, Metrics.loglikelihood_prob_norm_token, Metrics.loglikelihood_prob_norm_pmi,
+                Metrics.loglikelihood_acc_norm_nospace,
+                Metrics.loglikelihood_acc_norm_pmi, 
+                Metrics.loglikelihood_prob, 
+                Metrics.loglikelihood_prob_norm, 
+                Metrics.loglikelihood_prob_norm_token, 
+                Metrics.loglikelihood_prob_norm_pmi,
             ),
         )
 

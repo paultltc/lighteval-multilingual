@@ -81,7 +81,7 @@ class M_MMLUTask(LightevalTaskConfig):
             filter=lambda line: line["id"].split("/")[0] == subset,
             trust_dataset=True,
             evaluation_splits=("test",),
-            few_shots_split="val",
+            few_shots_split="train",
             metric=(
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_nospace,
