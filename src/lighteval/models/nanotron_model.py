@@ -309,8 +309,8 @@ class NanotronLightevalModel(LightevalModel):
     def device(self) -> Union[int, str, torch.device]:
         return "cuda"
 
-    def _get_batch_size(self, max_input_length: int, override_bs: int = 0, starting_batch_size: int = 512) -> int:
-        if override_bs > 0:
+    def _get_batch_size(self, max_input_length: int, override_bs: int = None, starting_batch_size: int = 512) -> int:
+        if override_bs:
             return override_bs
         logger.warning("Detecting largest batch size")
 
