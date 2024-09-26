@@ -15,7 +15,7 @@ class XCODAHTask(LightevalTaskConfig):
     def __init__(self, lang: LANGS):
         self.lang = lang
         super().__init__(
-            name=f"x-codah-{lang}",
+            name=f"xcodah-{lang}",
             prompt_function=get_xcodah_prompt(lang),
             suite=("custom",),
             hf_repo="INK-USC/xcsr",
@@ -34,7 +34,7 @@ class XCSQATask(LightevalTaskConfig):
     def __init__(self, lang: LANGS):
         self.lang = lang
         super().__init__(
-            name=f"x-csqa-{lang}",
+            name=f"xcsqa-{lang}",
             prompt_function=get_m_xcsr_prompt(lang),
             suite=("custom",),
             hf_repo="INK-USC/xcsr",

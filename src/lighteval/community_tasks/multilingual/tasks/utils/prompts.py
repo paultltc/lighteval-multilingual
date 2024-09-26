@@ -242,6 +242,21 @@ def get_arc_prompt(lang: LANGS, nested_choices=False):
 
     return adapter
 
+def get_m_arc_prompt(lang: LANGS):
+    prompter = _get_multi_qa_prompt(lang)
+
+    def adapter(line, task_name):
+        choices = [line["option_a"], line["option_b"], line["option_c"], line["option_d"]]
+        is_number_choice = line["answer"].isdigit()
+        gold_index = (
+            LETTER_INDICES.index(line["answer"])
+            if not is_number_choice
+            else int(line["answer"]) - 1
+        )
+        return prompter(task_name, line["instruction"], choices, gold_index)
+
+    return adapter
+
 
 def get_cmllu_prompt(lang: LANGS):
     prompter = _get_multi_qa_prompt(lang)

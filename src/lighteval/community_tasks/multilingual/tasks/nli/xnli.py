@@ -16,7 +16,7 @@ class XNLITask(LightevalTaskConfig):
 
     def __init__(self, lang: LANGS, version: Literal[1,2] = 1):
         super().__init__(
-            name=f"xnli-bool{f'-v{version}' if version != 1 else ''}-{lang}",
+            name=f"xnli{f'-v{version}' if version != 1 else ''}-{lang}",
             suite=("custom",),
             prompt_function=get_xnli_prompt(lang, version),
             hf_repo="facebook/xnli",
