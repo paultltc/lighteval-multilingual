@@ -77,14 +77,14 @@ CMMLU_TASK_TYPE = Literal[
 ]
 
 class CMMLUTask(LightevalTaskConfig):
-    NAME = "c_mmlu"
+    NAME = "chinese_mmlu"
     LANGS = Literal['zh']
     SUBSETS = CMMLU_TASK_TYPE
 
     def __init__(self, task: CMMLU_TASK_TYPE):
         self.task = task
         super().__init__(
-            name=f"cmmlu:{task}",
+            name=f"chinese_mmlu:{task}-zh",
             prompt_function=get_cmllu_prompt("zh"),
             suite=("custom",),
             hf_repo="haonan-li/cmmlu",

@@ -12,7 +12,7 @@ class IndicQATask(LightevalTaskConfig):
 
     def __init__(self, lang: LANGS, max_query_length: int):
         super().__init__(
-            name=f"indicqa.{lang}",
+            name=f"indicqa-{lang}",
             prompt_function=get_mlqa_prompt(lang),
             suite=("custom",),
             hf_repo="ai4bharat/IndicQA",

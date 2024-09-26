@@ -49,13 +49,13 @@ AR_MMLU_TASK_TYPE = Literal[
 ]
 
 class ArabicMMLUTask(LightevalTaskConfig):
-    NAME = "ar_mmlu"
+    NAME = "arabic_mmlu"
     LANGS = Literal['ar']
     SUBSETS = AR_MMLU_TASK_TYPE
 
     def __init__(self, task: AR_MMLU_TASK_TYPE, max_query_length: int=2048, limit: int=250):
         super().__init__(
-            name=f"arabic_mmlu_native:{task.lower().replace(' ', '_').replace('(', '').replace(')', '')}",
+            name=f"arabic_mmlu:{task.lower().replace(' ', '_').replace('(', '').replace(')', '')}-ar",
             prompt_function=get_arabic_mmlu_prompt("ar"),
             suite=("custom",),
             hf_repo="yazeed7/ArabicMMLU",

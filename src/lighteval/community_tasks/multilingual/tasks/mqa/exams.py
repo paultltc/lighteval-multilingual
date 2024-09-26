@@ -35,7 +35,7 @@ class ExamsTask(LightevalTaskConfig):
         lang_name = LANG_NAMES_INVERTED[lang].capitalize()
         super().__init__(
             #name=f"exams{'_options' if show_options else ''}-{lang}:{subject}",
-            name=f"exams-{lang}:{subject}",
+            name=f"exams:{subject}-{lang}",
             prompt_function=get_m_exams_prompt(lang, show_options=show_options),
             suite=("custom",),
             hf_repo="mhardalov/exams",

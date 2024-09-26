@@ -17,7 +17,7 @@ class MetaMMLUTask(LightevalTaskConfig):
         subset = "Meta-Llama-3.1-8B-Instruct-evals__multilingual_mmlu__details" if lang == 'en' \
                     else f"Meta-Llama-3.1-8B-Instruct-evals__multilingual_mmlu_{lang}__details"
         super().__init__(
-            name=f"meta_mmlu-{lang}:{task}",
+            name=f"meta_mmlu:{task}-{lang}",
             prompt_function=get_meta_mmlu_prompt(lang),
             suite=("custom",),
             hf_repo="meta-llama/Meta-Llama-3.1-8B-Instruct-evals",

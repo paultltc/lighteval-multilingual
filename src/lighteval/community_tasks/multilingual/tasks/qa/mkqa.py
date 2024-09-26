@@ -51,7 +51,7 @@ class MkqaTask(LightevalTaskConfig):
     def __init__(self, lang: LANGS, type: SUBSETS):
         dst_lang = "zh_cn" if lang == "zh" else lang
         super().__init__(
-            name=f"mkqa-{lang}:{type}",
+            name=f"mkqa:{type}-{lang}",
             prompt_function=get_mkqa_prompt(lang, dst_lang),
             suite=("custom",),
             hf_repo="apple/mkqa",

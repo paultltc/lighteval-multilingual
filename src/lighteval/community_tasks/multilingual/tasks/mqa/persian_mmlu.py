@@ -6,12 +6,12 @@ from lighteval.metrics.metrics import Metrics
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
 
 class PersianMMLU(LightevalTaskConfig):
-    NAME = "m_mmlu-fa"
+    NAME = "persian_mmlu"
     LANGS = Literal['fa']
 
     def __init__(self, lang: LANGS):
         super().__init__(
-            name=f"m_mmlu-{lang}",
+            name=f"persian_mmlu-{lang}",
             prompt_function=get_khayyam_challenge_prompt(lang),
             suite=("custom",),
             hf_repo="raia-center/khayyam-challenge",
