@@ -217,8 +217,7 @@ def download_dataset_worker(args):
         path=dataset_path,
         name=dataset_config_name,
         data_dir=None,
-        cache_dir=None,
-        download_mode=None,
+        cache_dir=os.getenv('HF_HOME'),
         trust_remote_code=trust_dataset,
         revision=hf_revision,
         token=os.getenv('HF_TOKEN')
