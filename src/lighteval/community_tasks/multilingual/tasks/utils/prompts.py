@@ -195,7 +195,7 @@ def get_mmlu_prompt(lang: LANGS, is_number_choice: bool = False, zero_based=True
 
     return adapter
 
-def get_m_mmlu_prompt(lang: LANGS, is_number_choice: bool = False, zero_based=True):
+def get_m_mmlu_prompt(lang: LANGS):
     prompter = _get_multi_qa_prompt(lang)
 
     def adapter(line, task_name):
@@ -323,6 +323,15 @@ def get_meta_mmlu_prompt(lang: LANGS):
         line["input_question"],
         [v for _, v in sorted(line["input_choice_list"].items())],
         LETTER_INDICES.index(line["input_correct_responses"][0]),
+    )
+
+def get_openai_mmlu_prompt(lang: LANGS):
+    prompter = _get_multi_qa_prompt(lang)
+    return lambda line, task_name: prompter(
+        task_name,
+        line["Question"],
+        [line["A"], line["B"], line["C"], line["D"]],
+        LETTER_INDICES.index(line["Answer"]),
     )
     
 def get_arabic_mmlu_prompt(lang: LANGS):

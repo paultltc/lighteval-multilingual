@@ -50,6 +50,23 @@ LANG_NAMES = {
 
 LANG_NAMES_INVERTED = {v: k for k, v in LANG_NAMES.items()}
 
+LANG_OPENAI_NAMES = {
+    'ar': 'AR_XY',
+    'bn': 'BN_BD',
+    'de': 'DE_DE',
+    'es': 'ES_LA',
+    'fr': 'FR_FR',
+    'hi': 'HI_IN',
+    'id': 'ID_ID',
+    'it': 'IT_IT',
+    'ja': 'JA_JP',
+    'ko': 'KO_KR',
+    'pt': 'PT_BR',
+    'sw': 'SW_KE',
+    'yo': 'YO_NG',
+    'zh': 'ZH_CN'
+}
+
 NO_PUNCT_LANGS = ["th"]
 
 QUESTION = {
