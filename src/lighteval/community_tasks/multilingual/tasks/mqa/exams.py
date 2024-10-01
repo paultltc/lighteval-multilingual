@@ -26,7 +26,7 @@ EXAMS_SUBSETS = {
 
 # If too hard we can add help with para
 class ExamsTask(LightevalTaskConfig):
-    NAME = "m_exams"
+    NAME = "exams"
     LANGS = Literal["ar", "bg", "hr", "hu", "it", "sr", "fr", "de", "es", "lt", "sq", "mk", "tr", "pl", "pt", "vi"]
     SUBSETS = EXAMS_SUBSETS
 
@@ -35,7 +35,7 @@ class ExamsTask(LightevalTaskConfig):
         lang_name = LANG_NAMES_INVERTED[lang].capitalize()
         super().__init__(
             #name=f"exams{'_options' if show_options else ''}-{lang}:{subject}",
-            name=f"m_exams:{subject}-{lang}",
+            name=f"exams:{subject}-{lang}",
             prompt_function=get_m_exams_prompt(lang, show_options=show_options),
             suite=("custom",),
             hf_repo="mhardalov/exams",
