@@ -72,7 +72,7 @@ class M_MMLUTask(LightevalTaskConfig):
     def __init__(self, lang: LANGS, subject: SUBSETS):
         self.subset = subject
         super().__init__(
-            name=f"m_mmlu:{subject}-{lang}",
+            name=f"m_mmlu-{lang}:{subject}",
             prompt_function=get_m_mmlu_prompt(lang),
             suite=("custom",),
             hf_repo="alexandrainst/m_mmlu",
@@ -142,7 +142,7 @@ class Meta_MMLUTask(LightevalTaskConfig):
         subset = "Meta-Llama-3.1-8B-Instruct-evals__multilingual_mmlu__details" if lang == 'en' \
                     else f"Meta-Llama-3.1-8B-Instruct-evals__multilingual_mmlu_{lang}__details"
         super().__init__(
-            name=f"meta_mmlu:{subject}-{lang}",
+            name=f"meta_mmlu-{lang}:{subject}",
             prompt_function=get_meta_mmlu_prompt(lang),
             suite=("custom",),
             hf_repo="meta-llama/Meta-Llama-3.1-8B-Instruct-evals",
@@ -176,7 +176,7 @@ class Openai_MMLUTask(LightevalTaskConfig):
 
     def __init__(self, lang: LANGS, subject: SUBSETS):
         super().__init__(
-            name=f"openai_mmlu:{subject}-{lang}",
+            name=f"openai_mmlu-{lang}:{subject}",
             prompt_function=get_openai_mmlu_prompt(lang),
             suite=("custom",),
             hf_repo="openai/MMMLU",

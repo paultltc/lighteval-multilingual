@@ -14,7 +14,7 @@ class M3LU_TASK(LightevalTaskConfig):
     def __init__(self, lang: LANGS):
         subset = LANG_NAMES_INVERTED[lang]
         super().__init__(
-            name=f"xcopa-{lang}",
+            name=f"3mlu-{lang}",
             suite=("custom",),
             prompt_function=get_3mlu_prompt(lang),
             hf_repo="paultltc/3mlu",

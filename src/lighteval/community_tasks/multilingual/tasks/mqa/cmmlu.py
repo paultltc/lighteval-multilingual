@@ -84,7 +84,7 @@ class CMMLUTask(LightevalTaskConfig):
     def __init__(self, task: CMMLU_TASK_TYPE):
         self.task = task
         super().__init__(
-            name=f"chinese_mmlu:{task}-zh",
+            name=f"chinese_mmlu-zh:{task}",
             prompt_function=get_cmllu_prompt("zh"),
             suite=("custom",),
             hf_repo="haonan-li/cmmlu",

@@ -55,7 +55,7 @@ class ArabicMMLUTask(LightevalTaskConfig):
 
     def __init__(self, task: AR_MMLU_TASK_TYPE, max_query_length: int=2048, limit: int=250):
         super().__init__(
-            name=f"arabic_mmlu:{task.lower().replace(' ', '_').replace('(', '').replace(')', '')}-ar",
+            name=f"arabic_mmlu-ar:{task.lower().replace(' ', '_').replace('(', '').replace(')', '')}",
             prompt_function=get_arabic_mmlu_prompt("ar"),
             suite=("custom",),
             hf_repo="yazeed7/ArabicMMLU",
