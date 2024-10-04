@@ -1,10 +1,5 @@
 from typing import Literal
 
-
-# This is experimental flag if activated languages without sentence space separation will be evaluated that way
-LANGS = Literal["ar", "en", "fr", "hi", "ru", "sw", "te", "th", "tr", "zh"]
-#LANGS = Literal['ar', 'bg', 'bn', 'ca', 'de', 'el', 'en', 'es', 'et', 'eu', 'fi', 'fr', 'hi', 'ht', 'id', 'it', 'ja', 'ko', 'my', 'pt', 'qu', 'ru', 'sw', 'ta', 'te', 'th', 'tr', 'ur', 'vi', 'zh']
-
 LANG_NAMES = {
     "arabic": "ar",
     "bengali": "bn",
@@ -49,6 +44,8 @@ LANG_NAMES = {
 
 
 LANG_NAMES_INVERTED = {v: k for k, v in LANG_NAMES.items()}
+
+SUPPORTED_LANGS = list(LANG_NAMES_INVERTED.keys())
 
 LANG_OPENAI_NAMES = {
     'ar': 'AR_XY',
@@ -101,6 +98,12 @@ QUESTION = {
     "ur": "سوال",
     "vi": "Câu hỏi",
     "zh": "问题",
+    "lt": "Klausimas",
+    "mk": "Прашање",
+    "pl": "Pytanie",
+    "sr": "Питање",
+    "sv": "Fråga",
+    "sq": "Pyetje",
 }
 
 OPTIONS = {
@@ -135,6 +138,12 @@ OPTIONS = {
     "ur": "اختیارات",
     "vi": "Tùy chọn",
     "zh": "选项",
+    "lt": "Pasirinkimai",
+    "mk": "Опции",
+    "pl": "Opcje",
+    "sr": "Опције",
+    "sv": "Alternativ",
+    "sq": "Opsione",
 }
 
 ANSWER = {
@@ -169,6 +178,12 @@ ANSWER = {
     "ur": "جواب",
     "vi": "Câu trả lời",
     "zh": "答案",
+    "lt": "Atsakymas",
+    "mk": "Одговор",
+    "pl": "Odpowiedź",
+    "sr": "Одговор",
+    "sv": "Svar",
+    "sq": "Përgjigje",
 }
 
 NLI_QUESTION = {
@@ -202,6 +217,12 @@ NLI_QUESTION = {
     "ur": "ہے نہ",
     "vi": "đúng không",
     "zh": "是不是",
+    "lt": "tiesa",
+    "mk": "нели",
+    "pl": "prawda",
+    "sr": "зар не",
+    "sv": "eller hur",
+    "sq": "apo jo",
 }
 
 ENTAILMENT_LABELS = {
@@ -235,6 +256,12 @@ ENTAILMENT_LABELS = {
     "ur": "ہاں",
     "vi": "Có",
     "zh": "是的",
+    "lt": "Taip",
+    "mk": "Да",
+    "pl": "Tak",
+    "sr": "Да",
+    "sv": "Ja",
+    "sq": "Po",
 }
 
 NEUTRAL_LABELS = {
@@ -268,6 +295,12 @@ NEUTRAL_LABELS = {
     "ur": "بھی",
     "vi": "Ngoài ra",
     "zh": "而且",
+    "lt": "Taip pat",
+    "mk": "Исто така",
+    "pl": "Także",
+    "sr": "Такође",
+    "sv": "Också",
+    "sq": "Gjithashtu",
 }
 
 CONTRADICTION_LABELS = {
@@ -301,6 +334,12 @@ CONTRADICTION_LABELS = {
     "ur": "نہیں",
     "vi": "Không",
     "zh": "不是",
+    "lt": "Ne",
+    "mk": "Не",
+    "pl": "Nie",
+    "sr": "Не",
+    "sv": "Nej",
+    "sq": "Jo",
 }
 
 
@@ -360,6 +399,12 @@ CAUSE_LABELS = {
     "ur": "کیونکہ",
     "vi": "bởi vì",
     "zh": "因为",
+    "lt": "nes",
+    "mk": "бидејќи",
+    "pl": "ponieważ",
+    "sr": "зато што",
+    "sv": "eftersom",
+    "sq": "sepse",
 }
 
 EFFECT_LABELS = {
@@ -393,6 +438,12 @@ EFFECT_LABELS = {
     "ur": "لہذا",
     "vi": "vì thế",
     "zh": "所以",
+    "lt": "todėl",
+    "mk": "затоа",
+    "pl": "dlatego",
+    "sr": "зато",
+    "sv": "därför",
+    "sq": "prandaj",
 }
 
 
@@ -430,6 +481,12 @@ FULL_STOP = {
     "ur": ".",
     "vi": ".",
     "zh": "。",
+    "lt": ".",
+    "mk": ".",
+    "pl": ".",
+    "sr": ".",
+    "sv": ".",
+    "sq": ".",
 }
 
 WORD_SPACE = {
@@ -464,6 +521,12 @@ WORD_SPACE = {
     "ur": " ",
     "vi": " ",
     "zh": "",
+    "lt": " ",
+    "mk": " ",
+    "pl": " ",
+    "sr": " ",
+    "sv": " ",
+    "sq": " ",
 }
 
 SENTENCE_SPACE = {
@@ -498,6 +561,12 @@ SENTENCE_SPACE = {
     "ur": " ",
     "vi": " ",
     "zh": "",
+    "lt": " ",
+    "mk": " ",
+    "pl": " ",
+    "sr": " ",
+    "sv": " ",
+    "sq": " ",
 }
 
 COMMA = {
@@ -532,6 +601,12 @@ COMMA = {
     "ur": ",",
     "vi": ",",
     "zh": "，",
+    "lt": ",",
+    "mk": ",",
+    "pl": ",",
+    "sr": ",",
+    "sv": ",",
+    "sq": ",",
 }
 
 QUESTION_MARK = {
@@ -566,6 +641,12 @@ QUESTION_MARK = {
     "ur": "?",
     "vi": "?",
     "zh": "？",
+    "lt": "?",
+    "mk": "?",
+    "pl": "?",
+    "sr": "?",
+    "sv": "?",
+    "sq": "?",
 }
 
 COLON = {
@@ -600,6 +681,12 @@ COLON = {
     "ur": ":",
     "vi": ":",
     "zh": "：",
+    "lt": ":",
+    "mk": ":",
+    "pl": ":",
+    "sr": ":",
+    "sv": ":",
+    "sq": ":",
 }
 
 AND = {

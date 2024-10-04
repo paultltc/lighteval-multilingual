@@ -15,22 +15,19 @@ from lighteval.community_tasks.multilingual.tasks.qa.mlqa import MlqaTask
 from lighteval.community_tasks.multilingual.tasks.qa.tydiqa import TydiqaTask
 
 from typing import Literal, get_args
-#from lighteval.community_tasks.multilingual.tasks.utils.translation_literals import LANGS
+from lighteval.community_tasks.multilingual.tasks.utils.translation_literals import SUPPORTED_LANGS
 
 import importlib
 
-LANGS = ['ar', 'bg', 'bn', 'ca', 'de', 'el', 'en', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'pt', 'ru', 'sw', 'ta', 'te', 'th', 'tr', 'ur', 'vi', 'zh']
-
 _ALL_TASKS = []
-TASKS_GROUPS = {lang: [] for lang in LANGS}
+TASKS_GROUPS = {lang: [] for lang in SUPPORTED_LANGS}
 
 for task_group in TASKS_ENUM:
     for task in task_group.value:
         tls = []
         for lang in get_args(task.LANGS):
-            # TODO: Decide if we keep this
-            # Keep only the subset of desired languages
-            if not lang in LANGS:
+            # Keep only the subset of supported languages
+            if not lang in SUPPORTED_LANGS:
                 continue
             # If the task has multiple subsets, instantiate them all
             if hasattr(task, "SUBSETS"):

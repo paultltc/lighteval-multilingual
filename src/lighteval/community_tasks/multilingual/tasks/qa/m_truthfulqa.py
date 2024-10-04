@@ -7,18 +7,23 @@ from lighteval.tasks.lighteval_task import LightevalTaskConfig
 
 class M_TruthfulQATask(LightevalTaskConfig):
     NAME = "m_truthfulqa"
-    LANGS = Literal["ar", "bn", "ca", "da", "de", "es", "eu", "fr", "gu", "hi", "hr", "hu", "hy", "id", "it", "kn", "ml", "mr", "ne", "nl", "pt", "ro", "ru", "sk", "sr", "sv", "ta", "te", "uk", "vi", "zh"]
+    LANGS = Literal["ar", "bn", "ca", "da", "de", "es", "en", "eu", "fr", "gu", "hi", "hr", "hu", "hy", "id", "it", "kn", "ml", "mr", "ne", "nl", "pt", "ro", "ru", "sk", "sr", "sv", "ta", "te", "uk", "vi", "zh"]
     TYPES = Literal["mc1", "mc2"]
 
     def __init__(self, lang: LANGS, type: TYPES = "mc1"):
+        # Two cases, either multilingual or original one
+        repo = "truthfulqa/truthful_qa" if lang == 'en' else "alexandrainst/m_truthfulqa"
+        eval_split = "validation" if lang == 'en' else "val"
+        prompt_func = get_truthfulqa_prompt if lang == 'en' else get_m_truthfulqa_prompt
+
         super().__init__(
             name=f"m_truthfulqa-{lang}",
-            prompt_function=get_m_truthfulqa_prompt(lang, type),
+            prompt_function=prompt_func(lang, type),
             suite=("custom",),
-            hf_repo="alexandrainst/m_truthfulqa",
+            hf_repo=repo,
             hf_subset=lang,
             trust_dataset=True,
-            evaluation_splits=("val",),
+            evaluation_splits=(eval_split,),
             metric=(
                 Metrics.loglikelihood_acc,
                 Metrics.loglikelihood_acc_norm_token,
