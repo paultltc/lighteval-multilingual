@@ -9,7 +9,7 @@ from lighteval.community_tasks.multilingual.tasks.utils.translation_literals imp
 
 class M3LU_TASK(LightevalTaskConfig):
     NAME = "3mlu"
-    LANGS = Literal['ar', 'bg', 'bn', 'de', 'el', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'mk', 'pl', 'pt', 'ru', 'sq', 'sr', 'ta', 'te', 'tr', 'ur', 'vi', 'zh']
+    LANGS = Literal['ar', 'az', 'be', 'bg', 'bn', 'de', 'el', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'ge', 'he', 'hi', 'hr', 'hu', 'hy', 'id', 'it', 'ja', 'kk', 'ko', 'lt', 'mk', 'ml', 'ms', 'ne', 'nl', 'pl', 'pt', 'ru', 'sq', 'sr', 'ta', 'te', 'tl', 'tr', 'uk', 'ur', 'uz', 'vi', 'zh']
 
     def __init__(self, lang: LANGS):
         subset = LANG_NAMES_INVERTED[lang]
