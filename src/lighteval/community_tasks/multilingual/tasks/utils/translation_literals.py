@@ -1,5 +1,7 @@
 from typing import Literal
 
+LANGS = Literal['ar', 'bn', 'eu', 'bg', 'ca', 'zh', 'hr', 'en', 'et', 'fa', 'fi', 'fr', 'de', 'el', 'ht', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'mk', 'my', 'pl', 'pt', 'qu', 'ru', 'sr', 'es', 'sw', 'sv', 'sq', 'ta', 'te', 'th', 'tr', 'ur', 'vi']
+
 LANG_NAMES = {
     "arabic": "ar",
     "bengali": "bn",
@@ -42,10 +44,7 @@ LANG_NAMES = {
     "vietnamese": "vi",
 }
 
-
 LANG_NAMES_INVERTED = {v: k for k, v in LANG_NAMES.items()}
-
-SUPPORTED_LANGS = list(LANG_NAMES_INVERTED.keys())
 
 LANG_OPENAI_NAMES = {
     'ar': 'AR_XY',

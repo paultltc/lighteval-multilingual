@@ -15,9 +15,11 @@ from lighteval.community_tasks.multilingual.tasks.qa.mlqa import MlqaTask
 from lighteval.community_tasks.multilingual.tasks.qa.tydiqa import TydiqaTask
 
 from typing import Literal, get_args
-from lighteval.community_tasks.multilingual.tasks.utils.translation_literals import SUPPORTED_LANGS
+from lighteval.community_tasks.multilingual.tasks.utils.translation_literals import LANGS
 
 import importlib
+
+SUPPORTED_LANGS = get_args(LANGS)
 
 _ALL_TASKS = []
 TASKS_GROUPS = {lang: [] for lang in SUPPORTED_LANGS}

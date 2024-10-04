@@ -29,15 +29,10 @@ from ..utils.prompts import get_m_belebele_prompt
 from lighteval.metrics.metrics import Metrics
 from lighteval.tasks.lighteval_task import LightevalTaskConfig
 
-
-# TODO all supported langauges
-LANGS = Literal["ar", "en", "bg", "hr", "hu", "it", "mk", "pl", "pt", "sq", "sr", "tr", "vi", "zh", "te", "th", "sw", "hi", "ru", "fr"]
-
-
 # We convert from made-up codes to "standard" codes 😎, ignoring the script
 class BelebeleTask(LightevalTaskConfig):
     NAME = "belebele"
-    LANGS = Literal["ar", "en", "bg", "hr", "hu", "it", "mk", "pl", "pt", "sq", "sr", "tr", "vi", "zh", "te", "th", "sw", "hi", "ru", "fr"]
+    LANGS = Literal["ar", "en", "bg", "hr", "hu", "it", "mk", "pl", "pt", "sq", "tr", "vi", "zh", "te", "th", "sw", "hi", "ru", "fr"]
 
     def __init__(self, lang: LANGS):
         if lang == "zh":

@@ -219,18 +219,11 @@ def get_3mlu_prompt(lang: LANGS):
     prompter = _get_multi_qa_prompt(lang)
 
     def adapter(line, task_name):
-        # gold_index = (
-        #     LETTER_INDICES.index(line["answer"])
-        #     if not is_number_choice
-        #     else int(line["answer"])
-        # )
-        # if not zero_based:
-        #     gold_index -= 1
         return prompter(
             task_name, 
             line["question"], 
             [line[f"option_{l}"] for l in LETTER_INDICES[:4]], 
-            LETTER_INDICES.index(str(line["correct"]).upper())
+            LETTER_INDICES.index(str(line["correct"]))
         )
 
     return adapter
