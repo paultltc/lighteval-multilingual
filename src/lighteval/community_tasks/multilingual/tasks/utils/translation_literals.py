@@ -1,7 +1,8 @@
 from typing import Literal
 
-LANGS = Literal['ar', 'bn', 'eu', 'bg', 'ca', 'zh', 'hr', 'en', 'et', 'fa', 'fi', 'fr', 'de', 'el', 'ht', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'mk', 'my', 'pl', 'pt', 'qu', 'ru', 'sr', 'es', 'sw', 'sv', 'sq', 'ta', 'te', 'th', 'tr', 'ur', 'vi']
+LANGS = Literal['ar', 'bn', 'eu', 'bg', 'ca', 'zh', 'en', 'et', 'fa', 'fi', 'fr', 'de', 'el', 'ht', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'mk', 'my', 'pl', 'pt', 'qu', 'ru', 'sr', 'es', 'sw', 'sv', 'sq', 'ta', 'te', 'th', 'tr', 'ur', 'vi']
 
+# TODO: Add vocab for hr
 LANG_NAMES = {
     "arabic": "ar",
     "bengali": "bn",
