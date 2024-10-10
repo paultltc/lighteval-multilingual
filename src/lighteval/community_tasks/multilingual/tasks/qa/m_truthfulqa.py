@@ -21,7 +21,7 @@ class M_TruthfulQATask(LightevalTaskConfig):
             prompt_function=prompt_func(lang, type),
             suite=("custom",),
             hf_repo=repo,
-            hf_subset=lang,
+            hf_subset="multiple_choice" if lang == 'en' else lang,
             trust_dataset=True,
             evaluation_splits=(eval_split,),
             metric=(
