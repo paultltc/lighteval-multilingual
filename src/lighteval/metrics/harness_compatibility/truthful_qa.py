@@ -24,7 +24,7 @@ import numpy as np
 
 
 # Comes from the harness
-def truthfulqa_mc_metrics(gold_ixs, choices_logprob, formatted_doc):
+def truthfulqa_mc_metrics(gold_ixs, choices_logprob, formatted_doc, **kwargs):
     def mc1(lls):
         # The gold answers in `mc1_targets` are always first (index = `0`).
         return np.argmax(lls) == 0

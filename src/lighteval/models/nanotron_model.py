@@ -219,6 +219,13 @@ class NanotronLightevalModel(LightevalModel):
 
         self.model_info = ModelInfo(model_name=f"{nanotron_config.general.run}/{nanotron_config.general.step}")
 
+        # Languages helper
+        self.model_langs = set()
+        for data_stage in nanotron_config.data_stages:
+            self.model_langs.update(data_stage.data.dataset.languages)        
+        self.code2lang = dict(enumerate(self.model_langs))
+        self.lang2code = {v: k for k,v in self.code2lang.items()}
+
     @property
     def tokenizer(self):
         return self._tokenizer
@@ -349,7 +356,8 @@ class NanotronLightevalModel(LightevalModel):
 
     def _model_call(self, input_ids: torch.Tensor, input_mask: torch.Tensor, langs: List[str]) -> torch.Tensor:
         # TODO: Handle lang code
-        lang_code = ...
+        lang_code = torch.tensor([self.lang2code.get(l, -1) for l in langs])
+        print(lang_code)
         return self.model(input_ids=input_ids, input_mask=input_mask, lang_code=lang_code)
 
     def _encode_pair(self, context, continuation):
