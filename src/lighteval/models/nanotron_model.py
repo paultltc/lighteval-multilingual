@@ -56,7 +56,7 @@ from lighteval.tasks.requests import (
 from lighteval.utils.imports import is_nanotron_available
 from lighteval.utils.parallelism import find_executable_batch_size
 from lighteval.utils.utils import EnvConfig, as_list, boolstring_to_bool
-
+from lighteval.utils.tasks import get_lang_from_task
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -347,8 +347,10 @@ class NanotronLightevalModel(LightevalModel):
     def tok_decode(self, tokens: torch.LongTensor) -> List[str]:
         return self.tokenizer.batch_decode(tokens, skip_special_tokens=True)
 
-    def _model_call(self, inputs: torch.Tensor, input_mask: torch.Tensor) -> torch.Tensor:
-        return self.model(input_ids=inputs, input_mask=input_mask)
+    def _model_call(self, input_ids: torch.Tensor, input_mask: torch.Tensor, langs: List[str]) -> torch.Tensor:
+        # TODO: Handle lang code
+        lang_code = ...
+        return self.model(input_ids=input_ids, input_mask=input_mask, lang_code=lang_code)
 
     def _encode_pair(self, context, continuation):
         n_spaces = len(context) - len(context.rstrip())
@@ -722,13 +724,19 @@ class NanotronLightevalModel(LightevalModel):
                     )
                 iteration_start_time = time.time()
                 inputs = [item.tokenized_context for item in batch_data]
+                langs = [get_lang_from_task(item.task_name) for item in batch_data]
 
                 batch_model = self.prepare_batch(
                     inputs, padding_length=max_context, max_context=max_context, full_attention_masks=True
                 )
                 # batched_inputs, batch_attention, input_lengths, truncated, padded
 
-                out = self.model(input_ids=batch_model.input_ids, input_mask=batch_model.input_mask)
+                #out = self.model(input_ids=batch_model.input_ids, input_mask=batch_model.input_mask)
+                out = self._model_call(
+                    input_ids=batch_model.input_ids, 
+                    input_mask=batch_model.input_mask, 
+                    langs=langs
+                )
 
                 if dist.get_rank(self.parallel_context.pp_pg) == self.output_pp_rank:
                     # This process got outputs
@@ -955,18 +963,21 @@ class NanotronLightevalModel(LightevalModel):
                 inputs = [
                     item.tokenized_context + item.tokenized_continuation[:-1] for item in batch_data
                 ]  # The last token doesn't need to be input in the model
+                langs = [
+                    get_lang_from_task(item.task_name) for item in batch_data
+                ]
+
                 batch_model = self.prepare_batch(
                     inputs, padding_length=max_context, max_context=max_context, full_attention_masks=True
                 )
                 # batched_inputs, batch_attention, input_lengths, truncated, padded
                 with torch.no_grad():
-                    # inference_batch = {
-                    #     'input_ids': batch_model.input_ids,
-                    #     'input_mask': batch_model.input_mask,
-                    #     'lang_code': None,
-                    # }
-                    # out = self.model(**inference_batch)
-                    out = self.model(input_ids=batch_model.input_ids, input_mask=batch_model.input_mask)
+                    out = self._model_call(
+                        input_ids=batch_model.input_ids, 
+                        input_mask=batch_model.input_mask, 
+                        langs=langs
+                    )
+                    #out = self.model(input_ids=batch_model.input_ids, input_mask=batch_model.input_mask)
 
                 if dist.get_rank(self.parallel_context.pp_pg) == self.output_pp_rank:
                     # This process got outputs
