@@ -356,9 +356,8 @@ class NanotronLightevalModel(LightevalModel):
 
     def _model_call(self, input_ids: torch.Tensor, input_mask: torch.Tensor, langs: List[str]) -> torch.Tensor:
         # TODO: Handle lang code
-        lang_code = torch.tensor([self.lang2code.get(l, -1) for l in langs])
-        print(lang_code)
-        return self.model(input_ids=input_ids, input_mask=input_mask, lang_code=lang_code)
+        #lang_code = torch.tensor([self.lang2code.get(l, -1) for l in langs])
+        return self.model(input_ids=input_ids, input_mask=input_mask, lang_code=langs)
 
     def _encode_pair(self, context, continuation):
         n_spaces = len(context) - len(context.rstrip())
