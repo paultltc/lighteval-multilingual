@@ -48,6 +48,7 @@ from lighteval.models.model_output import (
     LoglikelihoodResponse,
     LoglikelihoodSingleTokenResponse,
 )
+from lighteval.models.utils import load_custom_tokenizer
 from lighteval.tasks.requests import (
     GreedyUntilRequest,
     LoglikelihoodRequest,
@@ -222,7 +223,7 @@ class NanotronLightevalModel(LightevalModel):
         # Languages helper
         self.model_langs = set()
         for data_stage in nanotron_config.data_stages:
-            self.model_langs.update(data_stage.data.dataset.languages)        
+            self.model_langs.update(data_stage.data.dataset.domains)        
         self.code2lang = dict(enumerate(self.model_langs))
         self.lang2code = {v: k for k,v in self.code2lang.items()}
 
@@ -241,12 +242,15 @@ class NanotronLightevalModel(LightevalModel):
         """Returns a pre-trained tokenizer from a pre-trained tokenizer configuration."""
 
         try:
-            tokenizer = AutoTokenizer.from_pretrained(
-                pretrained if tokenizer is None else tokenizer,
-                cache_dir=env_config.cache_dir,
-                token=env_config.token,
-                trust_remote_code=trust_remote_code,
-            )
+            if len(pretrained.split("/")) > 2:
+                tokenizer = load_custom_tokenizer(pretrained)
+            else:
+                tokenizer = AutoTokenizer.from_pretrained(
+                    pretrained if tokenizer is None else tokenizer,
+                    cache_dir=env_config.cache_dir,
+                    token=env_config.token,
+                    trust_remote_code=trust_remote_code,
+                )
         except RecursionError:
             tokenizer = AutoTokenizer.from_pretrained(
                 pretrained if tokenizer is None else tokenizer,
@@ -1008,6 +1012,12 @@ class NanotronLightevalModel(LightevalModel):
                         # We only look at the continuation tokens
                         if contlen > inplen:
                             # Continuation is longer than the input size, we are in rolling mode (only continuation)
+                            if len(cur_logits) > inplen:
+                                logger.warning(
+                                    f"Continuation length ({contlen}) is longer than input length ({inplen}). "
+                                    "This is not supported by the model, we will only look at the first tokens of the continuation."
+                                )
+                                cur_logits = cur_logits[:inplen]
                             cur_logits = cur_logits.unsqueeze(0).to(self.device)  # [1, seq, vocab]
                             cont_toks = cont_toks[:inplen].unsqueeze(0).to(self.device)  # [1, seq]
                         else:

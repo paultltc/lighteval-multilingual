@@ -102,3 +102,30 @@ def batched(iterable, n):
     it = iter(iterable)
     while batch := tuple(islice(it, n)):
         yield batch
+
+def load_custom_tokenizer(tokenizer_path: str):
+    from transformers import PreTrainedTokenizerFast
+    from tokenizers.pre_tokenizers import Whitespace, ByteLevel
+    from tokenizers import pre_tokenizers
+    from tokenizers.models import BPE
+    from tokenizers import Tokenizer
+    import os
+    """"
+    Load a custom tokenizer from the given path.
+    This function is used to load the tokenizer for the model.
+    """
+    merge_file = os.path.join(tokenizer_path, "merges.txt")
+    vocab_file = os.path.join(tokenizer_path, "vocab.json")
+    tokenizer = Tokenizer(BPE(vocab=vocab_file, merges=merge_file))
+    wrapped_tokenizer = PreTrainedTokenizerFast(
+    tokenizer_object=tokenizer,
+    unk_token="<unk>",
+    pad_token="<pad>",
+    bos_token="<s>",
+    eos_token= "</s>",
+    )
+    pre_tokenizer = pre_tokenizers.Sequence([Whitespace(), ByteLevel(use_regex=False)])
+    wrapped_tokenizer.pre_tokenizer = pre_tokenizer
+    special_tokens = ["<s>", "</s>", "<unk>", "<pad>"]
+    wrapped_tokenizer.add_special_tokens({"additional_special_tokens": special_tokens})
+    return wrapped_tokenizer
